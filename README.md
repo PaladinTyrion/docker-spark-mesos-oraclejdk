@@ -1,0 +1,39 @@
+# docker-spark-mesos
+
+A base Docker image for running Spark on Mesos, which can be referenced by the Spark property 'spark.mesos.executor.docker.image'.
+
+Based on https://github.com/apache/spark/blob/master/docker/spark-mesos/Dockerfile
+
+See http://spark.apache.org/docs/latest/running-on-mesos.html#mesos-docker-support
+
+
+
+## Usages
+
+
+### Submitting Application
+
+1. Create a new Docker image, adding your JAR:
+
+Dockerfile:
+
+```
+FROM argussecurity/spark-mesos
+ADD <app-jar> /<app-jar>
+```
+
+Command:
+
+`docker build -t <app-docker> .`
+
+
+2. Run Docker:
+
+`docker run --net host <app-docker> spark-submit --master mesos://<mesos-master-host>:<port> --deploy-mode client --conf spark.mesos.executor.docker.image=/<app-jar> --class <main-class> /<app-jar>`
+
+Spark driver, as well as the executors, will run inside the Docker container.
+
+
+### Spark Shell
+
+docker run --rm -it --net host argussecurity/spark-mesos:0.22.1-1.4.0 spark-shell --master mesos://master.mesos:5050
