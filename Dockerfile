@@ -2,8 +2,9 @@
 
 FROM mesosphere/mesos:0.22.1-1.0.ubuntu1404
 
-# Install Oracle JDK
-RUN apt-get update && \
+# Install Oracle JDK instead of OpenJDK
+RUN apt-get remove -y --auto-remove openjdk* && \
+    apt-get update && \
     apt-get install -y software-properties-common && \
     add-apt-repository -y ppa:webupd8team/java && \
     apt-get update && \
