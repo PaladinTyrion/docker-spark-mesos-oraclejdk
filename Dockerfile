@@ -2,8 +2,6 @@
 
 FROM mesosphere/mesos:0.22.1-1.0.ubuntu1404
 
-ENTRYPOINT ["/bin/sh", "-c"]
-
 # Install Oracle JDK instead of OpenJDK
 RUN apt-get remove -y --auto-remove openjdk* && \
     apt-get update && \
