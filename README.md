@@ -15,7 +15,7 @@ Tagging format: "$mesosVersion-$sparkVersion"
 Current Versions:
 
 * Apache Spark: 1.4.0
-* Apache Mesos: 0.22.1-1.1.-.ubuntu1404
+* Apache Mesos: 0.22.1-1.1-ubuntu1404
 * Oracle JDK: 7
 
 Your versions of Mesos and Spark doesn't match? Submit a pull request and we'll trigger a build.
