@@ -32,7 +32,7 @@ Your versions of Mesos and Spark doesn't match? Submit a pull request and we'll 
 Dockerfile:
 
 ```
-FROM argussecurity/spark-mesos
+FROM argussecurity/spark-mesos-oraclejdk
 ADD <app-jar> /<app-jar>
 ```
 
@@ -50,4 +50,4 @@ Spark driver, as well as the executors, will run inside the Docker container.
 
 ### Spark Shell
 
-docker run --rm -it --net host argussecurity/spark-mesos spark-shell --master mesos://master.mesos:5050
+docker run --rm -it --net host argussecurity/spark-mesos-oraclejdk spark-shell --master mesos://master.mesos:5050
