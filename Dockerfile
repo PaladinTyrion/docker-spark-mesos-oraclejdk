@@ -1,6 +1,6 @@
 ### Based on https://github.com/apache/spark/blob/master/docker/spark-mesos/Dockerfile
 
-FROM mesosphere/mesos:0.22.1-1.0.ubuntu1404
+FROM mesosphere/mesos:0.28.1-2.0.20.ubuntu1404
 
 # Install Oracle JDK instead of OpenJDK
 RUN apt-get remove -y --auto-remove openjdk* && \
@@ -17,7 +17,7 @@ RUN apt-get remove -y --auto-remove openjdk* && \
 RUN apt-get install -y python libnss3 curl
 
 RUN mkdir /opt/spark && \
-    curl http://archive.apache.org/dist/spark/spark-1.6.0/spark-1.6.0-bin-hadoop2.6.tgz \
+    curl http://archive.apache.org/dist/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.4.tgz \
     | tar --strip-components=1 -xzC /opt/spark && \
     rm /opt/spark/lib/spark-examples-*.jar
 
