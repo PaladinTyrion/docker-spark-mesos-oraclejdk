@@ -10,14 +10,14 @@ RUN apt-get remove -y --auto-remove openjdk* && \
     apt-get update && \
     echo debconf shared/accepted-oracle-license-v1-1 select true | sudo debconf-set-selections && \
     echo debconf shared/accepted-oracle-license-v1-1 seen true | sudo debconf-set-selections && \
-    sudo apt-get install -y oracle-java7-installer oracle-java7-set-default && \
+    sudo apt-get install -y oracle-java8-installer oracle-java8-set-default && \
     rm -r /var/cache/oracle-jdk*
 
 # Update the base ubuntu image with dependencies needed for Spark
 RUN apt-get install -y python libnss3 curl
 
 RUN mkdir /opt/spark && \
-    curl http://archive.apache.org/dist/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.6.tgz \
+    curl http://archive.apache.org/dist/spark/spark-1.6.1/spark-1.6.1-bin-hadoop2.4.tgz \
     | tar --strip-components=1 -xzC /opt/spark && \
     rm /opt/spark/lib/spark-examples-*.jar
 
