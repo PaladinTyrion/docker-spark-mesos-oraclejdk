@@ -25,3 +25,6 @@ RUN mkdir /opt/spark && \
 ENV SPARK_HOME /opt/spark
 ENV PATH $PATH:/opt/spark/bin
 ENV MESOS_NATIVE_JAVA_LIBRARY /usr/local/lib/libmesos.so
+
+EXPOSE 4040
+EXPOSE 8080
