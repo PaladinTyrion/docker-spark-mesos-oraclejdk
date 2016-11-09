@@ -1,6 +1,5 @@
 ### Based on https://github.com/apache/spark/blob/master/docker/spark-mesos/Dockerfile
-
-FROM mesosphere/mesos:0.28.2-2.0.27.ubuntu1404
+FROM mesosphere/mesos:1.0.2-rc1
 
 # Install Oracle JDK instead of OpenJDK
 RUN apt-get remove -y --auto-remove openjdk* && \
