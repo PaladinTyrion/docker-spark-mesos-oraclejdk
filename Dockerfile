@@ -25,6 +25,7 @@ RUN mkdir /opt/spark && \
 ENV SPARK_HOME /opt/spark
 ENV PATH $PATH:/opt/spark/bin
 ENV MESOS_NATIVE_JAVA_LIBRARY /usr/local/lib/libmesos.so
+ENV SPARK_EXECUTOR_URI http://archive.apache.org/dist/spark/spark-2.0.1/spark-2.0.1-bin-hadoop2.7.tgz
 
 EXPOSE 4040
 EXPOSE 8080
