@@ -14,7 +14,7 @@ Tagging format: "$mesosVersion-$sparkVersion"
 
 Current Versions:
 
-* Apache Spark: 2.0.0
+* Apache Spark: 2.0.1
 * Apache Mesos: 0.28.2-2.0.27.ubuntu1404
 * Oracle JDK: 8
 
