@@ -1,50 +1,24 @@
 ### Based on https://github.com/apache/spark/blob/master/docker/spark-mesos/Dockerfile
 FROM mesosphere/mesos:1.0.2-rc1
 
-RUN apt-get remove -y --auto-remove openjdk* && \
-    rm -fr /var/cache/oracle-jdk* && \
-    apt-get clean && apt-get autoremove -y
+# Install Oracle JDK instead of OpenJDK
+RUN echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd8team-java.list && \
+    echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list && \
+    apt-get remove -y --auto-remove openjdk* && \
+    apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EEA14886 && \
+    apt-get update && \
+    apt-get install -y software-properties-common && \
+    add-apt-repository -y ppa:webupd8team/java && \
+    apt-get update && \
+    echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+    echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections && \
+    DEBIAN_FRONTEND=noninteractive  apt-get install -y oracle-java8-installer oracle-java8-set-default && \
+    update-alternatives --remove java /usr/lib/jvm/java-9-openjdk-amd64/bin/java && \
+    rm -rf /var/cache/oracle-jdk8-installer && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        bzip2 \
-        unzip \
-        xz-utils \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN echo 'deb http://deb.debian.org/debian jessie-backports main' > /etc/apt/sources.list.d/jessie-backports.list
-
-# Default to UTF-8 file.encoding
-ENV LANG C.UTF-8
-
-# add a simple script that can auto-detect the appropriate JAVA_HOME value
-# based on whether the JDK or only the JRE is installed
-RUN { \
-        echo '#!/bin/sh'; \
-        echo 'set -e'; \
-        echo; \
-        echo 'dirname "$(dirname "$(readlink -f "$(which javac || which java)")")"'; \
-    } > /usr/local/bin/docker-java-home \
-    && chmod +x /usr/local/bin/docker-java-home
-
-ENV JAVA_HOME /usr/lib/jvm/java-8-openjdk-amd64
-
-ENV JAVA_VERSION 8u111
-ENV JAVA_DEBIAN_VERSION 8u111-b14-2~bpo8+1
-
-# see https://bugs.debian.org/775775
-# and https://github.com/docker-library/java/issues/19#issuecomment-70546872
-ENV CA_CERTIFICATES_JAVA_VERSION 20140324
-
-RUN set -x \
-    && apt-get update \
-    && apt-get install -y \
-        openjdk-8-jdk="$JAVA_DEBIAN_VERSION" \
-        ca-certificates-java="$CA_CERTIFICATES_JAVA_VERSION" \
-    && rm -rf /var/lib/apt/lists/* \
-    && [ "$JAVA_HOME" = "$(docker-java-home)" ]
-
-# see CA_CERTIFICATES_JAVA_VERSION notes above
-RUN /var/lib/dpkg/info/ca-certificates-java.postinst configure
+ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
 
 # Update the base ubuntu image with dependencies needed for Spark
 RUN apt-get install -y python libnss3 curl && \
