@@ -2,7 +2,7 @@
 FROM mesosphere/mesos:1.0.2-rc1
 
 RUN apt-get remove -y --auto-remove openjdk* && \
-    rm -r /var/cache/oracle-jdk* && \
+    rm -fr /var/cache/oracle-jdk* && \
     apt-get clean && apt-get autoremove -y
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
